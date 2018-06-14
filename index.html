@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+<title>Vienkāršu elektrisku shēmu modelēšana</title>
+<meta charset="utf-8"/>
+<style>
+table, th, td {border: 1px solid black;}
+div.center{text-align:center;}
+</style>
+</head>
+<body>
+	<div class=center><h1>"Vienkāršu elektrisku shēmu modelēšana"</h1>
+	<h4>Nikita Rahmanins</h4>
+	<h4>171REB171</h4>
+	<h4>May 2018</h4></div>
+	<h1>Saturs</h1>
+	<ul>
+		<li><a href="#1">1. Teorētiskā daļa</a></li>
+		<li><a href="#11">1.1. Ķēdes aprēķins</a></li>
+		<li><a href="#2">2. Praktiskā daļa</a></li>
+		<li><a href="#21">2.1. Darbs ar GEDA programmām</a></li>
+		<li><a href="#211">2.1.1. Darbs ar gschem</a></li>
+		<li><a href="#212">2.1.2. darbs ar gnetlist</a></li>
+		<li><a href="#213">2.1.3. darbs ar ngspice</a></li>
+		<li><a href="#22">2.2. Darbs are QUCS programmām</a></li>
+		<li><a href="#221">2.2.1. Principāla shēma</a></li>
+		<li><a href="#222">2.2.2. Tabula un grafiks</a></li>
+		<li><a href="#lit">Izmantotas literatūras saraksts</a></li>	
+	</ul>
+	<h1 id="1">1. Teorētiskā daļa</h1>
+	<h2 id="11">1.1. Ķēdes aprēķins</h2>
+	<svg width="100%" height ="300" version="1.1" xmlns="http://www.w3.org/2000/svg">
+		<rect x="100" y="100" width="300" height="200" style = "fill:white ;stroke:black; stroke-width:2"/>
+		<rect x="210" y="85" width="80" height="30" style = "fill:white ;stroke:black; stroke-width:2"/>
+		<text x="240" y="65" fill="#7777F0" font-size=40>R1</text>
+		<rect x="385" y="160" width="30" height="80" style = "fill:white ;stroke:black; stroke-width:2"/>
+		<text x="420" y="200" fill="#7777F0" font-size=40>R2</text>
+		<circle cx="100" cy="200" r="40" stroke="black" stroke-width="2" fill="white"/>
+		<text x="150" y="200" fill="#7777F0F0" font-size=40>V1</text>
+		<line x1="100" y1="165" x2="100" y2="185" stroke="black" stroke-width="1"/>
+		<line x1="110" y1="175" x2="90" y2="175" stroke="black" stroke-width="1"/>
+		<line x1="110" y1="225" x2="90" y2="225" stroke="black" stroke-width="1"/>
+	</svg>
+	<br>
+	V1 = 17.1 V<br>
+	R1 = 8 Ohm<br>
+	R2 = 2 Ohm<br>
+	<p>	Lai aprēķināt spriegumu uz R2 vajag izmantot sprieguma dalītāja formulu. [1] [2]	</p>
+	I = V1/(R1+R2) = 1.71A<br>
+	UR1 = I*R1 = 13.68 V<br>
+	UR2 = I*R2 = 3.42 V<br>
+	<p>	No šīm aprēķiniem es izveidoju tabulu ar rezultātiem (1.1)	</p>
+	<table>
+	  <caption> 1.1. Ķēdes elementu spriegumi un vērtības</caption>
+	  <tr>
+		<td>R1</td>
+		<td>8 Ohm</td>
+	  </tr>
+	  <tr>
+		<td>R2</td>
+		<td>2 Ohm</td>
+	  </tr>
+	  <tr>
+		<td>V1</td>
+		<td>17.1 V</td>
+	  </tr>
+	  <tr>
+		<td>UR1</td>
+		<td>13.68 V</td>
+	  </tr>
+	  <tr>
+		<td>UR2</td>
+		<td>3.42 V</td>
+	  </tr>
+	</table>
+	<img alt="Attēls" src="Atelas/gr11.png"><br>
+	Figure 2.1: Elektriskā shēma no GEDA<br>
+	<img alt="Attēls" src="Atelas/01.png" width="500"><br>
+	<h1 id="2">2. Praktiskā daļa</h1>
+	<h2 id="21">2.1. Darbs ar GEDA programmām</h2>
+	<h3 id="211">2.1.1. Darbs ar gschem</h3>
+	<p>Ar GEDA komandu gschem es izveidoju vienkāršo shēmu (2.1)</p>
+	<h3 id="212">2.1.2. darbs ar gnetlist</h3>
+	* Spice netlister for gnetlist <br>
+	V1 2 0 17.1 <br>
+	R2 0 1 8 <br>
+	R1 0 1 2 <br>
+	.END <br>
+	<h3 id="213">2.1.3. darbs ar ngspice</h3>
+	<p>Ar ngspice es izveidoju divus grafikus. Att. (2.2) un (2.3)</p>
+	<img alt="Attēls" src="Atelas/011.png" width="300"><br>
+	Figure 2.2: Grafiks no ngspice (1)<br>
+	<img alt="Attēls" src="Atelas/022.png" width="300"><br>
+	Figure 2.3: Grafiks no ngspice (2)<br>
+	<h2 id="22">2.2. Darbs are QUCS programmām</h2>
+	<h3 id="221">2.2.1. Principāla shēma</h3>
+	<img alt="Attēls" src="Atelas/shem.png" width="1000"><br>
+	Figure 2.4: Principāla shēma<br>
+	<p>Shēma ar visiem elementiem, R2 ir aizvietots ar x lai to izmantot kā argumentu Parameter Sweep analīzē. (2.4)</p>
+	<h3 id="222">2.2.2. Tabula un grafiks</h3>
+	<img alt="Attēls" src="Atelas/gr.png" width="1000"><br>
+	Figure 2.5: Tabula un grafiks<br>
+	<p>Kā ir redzams no grafika spriegums uz R2 mainās proporcionāli R2 pretestības izmaiņai pret kopējo pretestību. (2.5)</p>
+	<h2 id="lit">Izmantotas literatūras saraksts</h2>
+	<ul>
+		<li>[1] Andrejs Strauts. Elektrotehnikas teorētiskie pamati, lekciju konspekts. –Rīga,
+RTU, 2008, -197 lpp.
+\bibitem{gramata2}</li>
+		<li>[2] Kārlis Brīvkalns. Ķēžu teorija. Vadonis Ķēžu teorijas studijām: praktiskās
+nodarbības, laboratorijas darbi, MatLab programmas,PSpice pielietojums. –Rīga,
+RTU, 2008, - 93 lpp.</li>
+	</ul>
+</body>
+</html>
